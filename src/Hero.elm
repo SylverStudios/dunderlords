@@ -1,8 +1,10 @@
 module Hero exposing
     ( Alliance(..)
     , Hero
+    , Name(..)
     , earthSpirit
     , juggernaut
+    , nameToString
     , pudge
     , slardar
     , summary
@@ -26,6 +28,17 @@ type Alliance
     | Warrior
 
 
+type Name
+    = EarthSpirit
+    | Juggernaut
+    | Pudge
+    | Slardar
+    | Tidehunter
+    | Tiny
+    | TrollWarlord
+    | Tusk
+
+
 type alias Summary =
     { brawny : Int
     , heartless : Int
@@ -39,49 +52,49 @@ type alias Summary =
 
 
 type alias Hero =
-    { name : String
+    { name : Name
     , alliances : List Alliance
     }
 
 
 tusk : Hero
 tusk =
-    Hero "Tusk" [ Warrior, Savage ]
+    Hero Tusk [ Warrior, Savage ]
 
 
 earthSpirit : Hero
 earthSpirit =
-    Hero "Earth Spirit" [ Spirit, Warrior ]
+    Hero EarthSpirit [ Spirit, Warrior ]
 
 
 juggernaut : Hero
 juggernaut =
-    Hero "Juggernaut" [ Brawny, Warrior ]
+    Hero Juggernaut [ Brawny, Warrior ]
 
 
 pudge : Hero
 pudge =
-    Hero "Pudge" [ Heartless, Warrior ]
+    Hero Pudge [ Heartless, Warrior ]
 
 
 slardar : Hero
 slardar =
-    Hero "Slardar" [ Scaled, Warrior ]
+    Hero Slardar [ Scaled, Warrior ]
 
 
 tidehunter : Hero
 tidehunter =
-    Hero "Tidehunter" [ Scaled, Warrior ]
+    Hero Tidehunter [ Scaled, Warrior ]
 
 
 tiny : Hero
 tiny =
-    Hero "Tiny" [ Primordial, Warrior ]
+    Hero Tiny [ Primordial, Warrior ]
 
 
 trollWarlord : Hero
 trollWarlord =
-    Hero "Troll Warlord" [ Troll, Warrior ]
+    Hero TrollWarlord [ Troll, Warrior ]
 
 
 summary : List Hero -> Summary
@@ -115,7 +128,7 @@ summary heroes =
                     { accumulator | warrior = accumulator.warrior + 1 }
     in
     heroes
-        |> List.Extra.uniqueBy .name
+        |> List.Extra.uniqueBy (.name >> nameToString)
         |> List.concatMap .alliances
         |> List.foldl reduceAlliance
             { brawny = 0
@@ -127,3 +140,31 @@ summary heroes =
             , troll = 0
             , warrior = 0
             }
+
+
+nameToString : Name -> String
+nameToString name =
+    case name of
+        EarthSpirit ->
+            "Earth Spirit"
+
+        Juggernaut ->
+            "Juggernaut"
+
+        Pudge ->
+            "Pudge"
+
+        Slardar ->
+            "Slardar"
+
+        Tidehunter ->
+            "Tidehunter"
+
+        Tiny ->
+            "Tiny"
+
+        TrollWarlord ->
+            "Troll Warlord"
+
+        Tusk ->
+            "Tusk"

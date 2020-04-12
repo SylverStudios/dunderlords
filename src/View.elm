@@ -22,9 +22,13 @@ team heroes =
 
 heroMini : Hero -> Html Msg
 heroMini { name } =
+    let
+        heroName =
+            Hero.nameToString name
+    in
     div []
-        [ img [ class "hero", alt "Slardar Mini Badge", src "/images/minis/slardar.png" ] []
-        , text name
+        [ img [ class "hero", alt (heroName ++ " Mini Badge"), src ("/images/minis/" ++ heroName ++ ".png") ] []
+        , text heroName
         ]
 
 
