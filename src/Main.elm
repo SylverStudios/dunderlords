@@ -1,21 +1,17 @@
-module Main exposing (Model, Msg(..), init, main, update, view)
+module Main exposing (init, main, update, view)
 
 import Browser
-import Hero exposing (Alliance(..), Hero)
+import Hero exposing (Alliance(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Http exposing (Error(..))
+import Model exposing (Model, Msg(..))
+import View
 
 
 
 -- ---------------------------
 -- MODEL
 -- ---------------------------
-
-
-type alias Model =
-    { team : List Hero
-    }
 
 
 init : Int -> ( Model, Cmd Msg )
@@ -27,10 +23,6 @@ init _ =
 -- ---------------------------
 -- UPDATE
 -- ---------------------------
-
-
-type Msg
-    = Add
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -50,7 +42,7 @@ view : Model -> Html Msg
 view model =
     div [ class "container" ]
         [ header [] [ h1 [] [ text "Dunderlords Alliance Builder" ] ]
-        , div [ class "body" ] [ div [] (model.team |> List.map .name |> List.map text) ]
+        , div [ class "body" ] [ View.team model.team ]
         , allianceSummary model
         ]
 
