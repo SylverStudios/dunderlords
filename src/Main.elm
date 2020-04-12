@@ -21,7 +21,7 @@ type alias Model =
 
 init : Int -> ( Model, Cmd Msg )
 init _ =
-    ( { team = [ Hero.tusk ] }, Cmd.none )
+    ( { team = [ Hero.tusk, Hero.pudge, Hero.tidehunter, Hero.slardar ] }, Cmd.none )
 
 
 
@@ -64,8 +64,14 @@ allianceSummary { team } =
     in
     div [ class "alliance-summary" ]
         [ h2 [] [ text "Alliances" ]
-        , div [] [ text <| "Warrior: " ++ String.fromInt allianceCount.warrior ]
+        , div [] [ text <| "Brawny: " ++ String.fromInt allianceCount.brawny ]
+        , div [] [ text <| "Heartless: " ++ String.fromInt allianceCount.heartless ]
+        , div [] [ text <| "Primordial: " ++ String.fromInt allianceCount.primordial ]
         , div [] [ text <| "Savage: " ++ String.fromInt allianceCount.savage ]
+        , div [] [ text <| "Scaled: " ++ String.fromInt allianceCount.scaled ]
+        , div [] [ text <| "Spirit: " ++ String.fromInt allianceCount.spirit ]
+        , div [] [ text <| "Troll: " ++ String.fromInt allianceCount.troll ]
+        , div [] [ text <| "Warrior: " ++ String.fromInt allianceCount.warrior ]
         ]
 
 
