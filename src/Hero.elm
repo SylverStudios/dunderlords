@@ -12,6 +12,8 @@ module Hero exposing
     , tusk
     )
 
+import List.Extra
+
 
 type Alliance
     = Brawny
@@ -113,6 +115,7 @@ summary heroes =
                     { accumulator | warrior = accumulator.warrior + 1 }
     in
     heroes
+        |> List.Extra.uniqueBy .name
         |> List.concatMap .alliances
         |> List.foldl reduceAlliance
             { brawny = 0

@@ -5,7 +5,6 @@ import Hero exposing (Alliance(..), Hero)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Http exposing (Error(..))
-import List.Extra
 
 
 
@@ -64,14 +63,14 @@ allianceSummary { team } =
     in
     div [ class "alliance-summary" ]
         [ h2 [] [ text "Alliances" ]
-        , div [] [ text <| "Brawny: " ++ String.fromInt allianceCount.brawny ]
-        , div [] [ text <| "Heartless: " ++ String.fromInt allianceCount.heartless ]
-        , div [] [ text <| "Primordial: " ++ String.fromInt allianceCount.primordial ]
-        , div [] [ text <| "Savage: " ++ String.fromInt allianceCount.savage ]
-        , div [] [ text <| "Scaled: " ++ String.fromInt allianceCount.scaled ]
-        , div [] [ text <| "Spirit: " ++ String.fromInt allianceCount.spirit ]
-        , div [] [ text <| "Troll: " ++ String.fromInt allianceCount.troll ]
-        , div [] [ text <| "Warrior: " ++ String.fromInt allianceCount.warrior ]
+        , div [] [ img [ class "alliance", alt "Brawny Alliance Badge", src "/images/alliances/brawny.png" ] [], text <| "Brawny: " ++ String.fromInt allianceCount.brawny ]
+        , div [] [ img [ class "alliance", alt "Heartless Alliance Badge", src "/images/alliances/heartless.png" ] [], text <| "Heartless: " ++ String.fromInt allianceCount.heartless ]
+        , div [] [ img [ class "alliance", alt "Primordial Alliance Badge", src "/images/alliances/primordial.png" ] [], text <| "Primordial: " ++ String.fromInt allianceCount.primordial ]
+        , div [] [ img [ class "alliance", alt "Savage Alliance Badge", src "/images/alliances/savage.png" ] [], text <| "Savage: " ++ String.fromInt allianceCount.savage ]
+        , div [] [ img [ class "alliance", alt "Scaled Alliance Badge", src "/images/alliances/scaled.png" ] [], text <| "Scaled: " ++ String.fromInt allianceCount.scaled ]
+        , div [] [ img [ class "alliance", alt "Spirit Alliance Badge", src "/images/alliances/spirit.png" ] [], text <| "Spirit: " ++ String.fromInt allianceCount.spirit ]
+        , div [] [ img [ class "alliance", alt "Troll Alliance Badge", src "/images/alliances/troll.png" ] [], text <| "Troll: " ++ String.fromInt allianceCount.troll ]
+        , div [] [ img [ class "alliance", alt "Warrior Alliance Badge", src "/images/alliances/warrior.png" ] [], text <| "Warrior: " ++ String.fromInt allianceCount.warrior ]
         ]
 
 
