@@ -50,33 +50,22 @@ update message model =
 view : Model -> Html Msg
 view model =
     div [ class "container" ]
-        [ header []
-            [ -- img [ src "/images/logo.png" ] []
-              span [ class "logo" ] []
-            , h1 [] [ text "Elm 0.19.1 Webpack Starter, with hot-reloading" ]
-            ]
-        , div [ class "body" ]
-            [ div [] (model.team |> List.map .name |> List.map text)
-            ]
-        , div [ class "summary" ] [ allianceSummary model ]
+        [ header [] [ h1 [] [ text "Dunderlords Alliance Builder" ] ]
+        , div [ class "body" ] [ div [] (model.team |> List.map .name |> List.map text) ]
+        , allianceSummary model
         ]
 
 
 allianceSummary : Model -> Html Msg
 allianceSummary { team } =
     let
-        -- Need to dedup the list
-        allianceCount : Alliance -> List Hero -> Int
-        allianceCount alliance heroes =
-            heroes
-                |> List.Extra.uniqueBy .name
-                |> List.filter (\hero -> List.member alliance hero.alliances)
-                |> List.length
+        allianceCount =
+            Hero.summary team
     in
     div [ class "alliance-summary" ]
         [ h2 [] [ text "Alliances" ]
-        , div [] [ text ("Warrior: " ++ String.fromInt (allianceCount Warrior team)) ]
-        , div [] [ text ("Savage: " ++ String.fromInt (allianceCount Savage team)) ]
+        , div [] [ text <| "Warrior: " ++ String.fromInt allianceCount.warrior ]
+        , div [] [ text <| "Savage: " ++ String.fromInt allianceCount.savage ]
         ]
 
 
