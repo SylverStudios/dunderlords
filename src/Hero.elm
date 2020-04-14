@@ -3,6 +3,7 @@ module Hero exposing
     , Hero
     , Name(..)
     , earthSpirit
+    , imagePath
     , juggernaut
     , nameToString
     , pudge
@@ -15,6 +16,7 @@ module Hero exposing
     )
 
 import List.Extra
+import String.Extra
 
 
 type Alliance
@@ -39,6 +41,20 @@ type Name
     | Tusk
 
 
+{-| Tusk (A Hero Type, has similar fields to others, type alias?)
+It's nice to have the Name as an identifier.
+Can I have a Tusk Please - not necesarrily, can I have a Tusk with all info on it, filled out type
+
+  - name
+  - alliances
+
+-}
+type alias Hero =
+    { name : Name
+    , alliances : List Alliance
+    }
+
+
 type alias Summary =
     { brawny : Int
     , heartless : Int
@@ -48,12 +64,6 @@ type alias Summary =
     , spirit : Int
     , troll : Int
     , warrior : Int
-    }
-
-
-type alias Hero =
-    { name : Name
-    , alliances : List Alliance
     }
 
 
@@ -168,3 +178,15 @@ nameToString name =
 
         Tusk ->
             "Tusk"
+
+
+imagePath : Name -> String
+imagePath name =
+    let
+        lowerDashFileName =
+            name
+                |> nameToString
+                |> String.Extra.decapitalize
+                |> String.Extra.dasherize
+    in
+    "/images/minis/" ++ lowerDashFileName ++ ".png"

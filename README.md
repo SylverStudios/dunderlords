@@ -1,12 +1,13 @@
 # Dunderlords Alliance Builder
 
-<img alt="Current release v0.1" src="./dunderlordsv0.1.png" height="250">
+Mix and match builds, see suggestions for alterations, more?
 
-Elm dev environment with hot-loading (i.e. state is retained as you edit your code - Hot Module Reloading, HMR)). I use this daily for my professional work. Like elm-community/elm-webpack-starter but using Webpack 4.
+<img alt="Current release v0.1.1" src="./dunderlordsOhOneONe.png" height="250">
 
 ## Developing
 
-Start with Elm debug tool with either
+Elm dev environment with hot-loading. Committing to FULL NPM. No more yarn for now. I don't think it matters much, but the ambiguity hurts.
+
 ```sh
 npm test
 npm start # localhost:3000
@@ -21,18 +22,6 @@ Build production assets (js and css together) with:
 ```sh
 npm run prod
 ```
-
-## Testing
-
-[Install elm-test globally](https://github.com/elm-community/elm-test#running-tests-locally)
-
-`elm-test init` is run when you install your dependencies. After that all you need to do to run the tests is
-
-```
-yarn test
-```
-
-If you add dependencies to your main app, then run `elm-test --add-dependencies`
 
 ## Elm-analyse
 

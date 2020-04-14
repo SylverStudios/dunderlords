@@ -1,8 +1,8 @@
 {
-    "author": "Simon Hampton",
-    "name": "elm-webpack-starter",
-    "version": "3.9.2",
-    "description": "Elm 0.19 starter with Webpack 4 hot-reloading",
+    "author": "Sylver Studios",
+    "name": "dunderlords",
+    "version": "0.1.1",
+    "description": "Dota Underlords Alliance Builder",
     "main": "index.js",
     "scripts": {
         "test": "elm-test",
@@ -14,7 +14,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/simonh1000/elm-webpack-starter.git"
+        "url": "git+https://github.com/SylverStudios/dunderlords.git"
     },
     "license": "MIT",
     "devDependencies": {

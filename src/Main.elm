@@ -43,7 +43,7 @@ main =
         , update = update
         , view =
             \m ->
-                { title = "Elm 0.19 starter"
+                { title = "Alliance Builder"
                 , body = [ View.view m ]
                 }
         , subscriptions = \_ -> Sub.none
