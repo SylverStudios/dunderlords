@@ -1,9 +1,10 @@
 module View exposing (view)
 
 import Hero exposing (Alliance(..), Hero)
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Model exposing (Model, Msg)
+import Html exposing (Html, button, div, h1, h2, header, img, text)
+import Html.Attributes exposing (alt, class, src)
+import Html.Events exposing (onClick)
+import Model exposing (Model, Msg(..))
 
 
 view : Model -> Html Msg
@@ -17,7 +18,13 @@ view model =
 
 team : List Hero -> Html Msg
 team heroes =
-    div [ class "team" ] (heroes |> List.map heroMini)
+    let
+        -- Probably better as an icon
+        addHero : Html Msg
+        addHero =
+            button [ class "round", onClick Add ] [ text "+" ]
+    in
+    div [ class "team" ] (List.map heroMini heroes ++ [ addHero ])
 
 
 heroMini : Hero -> Html Msg

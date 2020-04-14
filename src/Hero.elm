@@ -39,6 +39,18 @@ type Name
     | Tusk
 
 
+{-| Tusk
+
+  - name
+  - alliances
+
+-}
+type alias Hero =
+    { name : Name
+    , alliances : List Alliance
+    }
+
+
 type alias Summary =
     { brawny : Int
     , heartless : Int
@@ -48,12 +60,6 @@ type alias Summary =
     , spirit : Int
     , troll : Int
     , warrior : Int
-    }
-
-
-type alias Hero =
-    { name : Name
-    , alliances : List Alliance
     }
 
 
