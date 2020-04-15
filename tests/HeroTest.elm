@@ -1,7 +1,7 @@
 module HeroTest exposing (summaryTest)
 
 import Expect
-import Hero
+import Hero exposing (Hero(..))
 import Test exposing (Test, describe, test)
 
 
@@ -12,7 +12,8 @@ summaryTest =
     describe "summarizes alliance"
         [ test "ignores duplicates" <|
             \() ->
-                [ Hero.tusk, Hero.tusk ]
+                [ Tusk, Tusk ]
+                    |> List.map Hero.info
                     |> Hero.summary
                     |> .savage
                     |> Expect.equal 1
