@@ -2,6 +2,7 @@ module Main exposing (init, main, update)
 
 import Browser
 import Hero exposing (Alliance(..), Hero(..))
+import List.Extra
 import Model exposing (Model, Msg(..))
 import View
 
@@ -28,6 +29,9 @@ update message model =
     case message of
         Add hero ->
             ( { model | team = hero :: model.team }, Cmd.none )
+
+        Remove hero ->
+            ( { model | team = List.Extra.remove hero model.team }, Cmd.none )
 
 
 

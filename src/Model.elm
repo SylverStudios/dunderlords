@@ -13,3 +13,4 @@ type alias Model =
 
 type Msg
     = Add Hero
+    | Remove Hero

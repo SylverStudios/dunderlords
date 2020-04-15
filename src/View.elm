@@ -5,6 +5,7 @@ import Html exposing (Html, button, div, h1, h2, header, img, section, text)
 import Html.Attributes exposing (alt, class, src)
 import Html.Events exposing (onClick)
 import Model exposing (Model, Msg(..))
+import View.Icon
 
 
 view : Model -> Html Msg
@@ -34,33 +35,26 @@ team heroes =
         addHero =
             button [ class "round", onClick (Add Tusk) ] [ text "+" ]
     in
-    div [ class "team" ] (List.map heroMini heroes ++ [ addHero ])
+    div [ class "team" ] (List.map (heroMini Remove) heroes ++ [ addHero ])
 
 
 heroPool : Html Msg
 heroPool =
     div [ class "pool" ]
-        [ heroMini EarthSpirit
-        , heroMini Juggernaut
-        , heroMini Pudge
-        , heroMini Slardar
-        , heroMini Tidehunter
-        , heroMini Tiny
-        , heroMini TrollWarlord
-        , heroMini Tusk
+        [ heroMini Add EarthSpirit
+        , heroMini Add Juggernaut
+        , heroMini Add Pudge
+        , heroMini Add Slardar
+        , heroMini Add Tidehunter
+        , heroMini Add Tiny
+        , heroMini Add TrollWarlord
+        , heroMini Add Tusk
         ]
 
 
-heroMini : Hero -> Html Msg
-heroMini hero =
-    let
-        heroName =
-            Hero.toString hero
-    in
-    div []
-        [ img [ class "hero", alt (heroName ++ " Mini Badge"), src (Hero.imagePath hero) ] []
-        , text heroName
-        ]
+heroMini : (Hero -> msg) -> Hero -> Html msg
+heroMini msg hero =
+    hero |> View.Icon.icon |> View.Icon.withMsg msg |> View.Icon.toHtml
 
 
 allianceSummary : List Hero -> Html Msg
