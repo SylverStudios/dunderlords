@@ -1,16 +1,17 @@
 module Hero exposing
     ( Alliance(..)
-    , Hero
-    , Name(..)
+    , Hero(..)
+    , HeroData
     , earthSpirit
     , imagePath
+    , info
     , juggernaut
-    , nameToString
     , pudge
     , slardar
     , summary
     , tidehunter
     , tiny
+    , toString
     , trollWarlord
     , tusk
     )
@@ -30,7 +31,7 @@ type Alliance
     | Warrior
 
 
-type Name
+type Hero
     = EarthSpirit
     | Juggernaut
     | Pudge
@@ -41,16 +42,44 @@ type Name
     | Tusk
 
 
+info : Hero -> HeroData
+info hero =
+    case hero of
+        EarthSpirit ->
+            earthSpirit
+
+        Juggernaut ->
+            juggernaut
+
+        Pudge ->
+            pudge
+
+        Slardar ->
+            slardar
+
+        Tidehunter ->
+            tidehunter
+
+        Tiny ->
+            tiny
+
+        TrollWarlord ->
+            trollWarlord
+
+        Tusk ->
+            tusk
+
+
 {-| Tusk (A Hero Type, has similar fields to others, type alias?)
-It's nice to have the Name as an identifier.
+It's nice to have the Hero as an identifier.
 Can I have a Tusk Please - not necesarrily, can I have a Tusk with all info on it, filled out type
 
   - name
   - alliances
 
 -}
-type alias Hero =
-    { name : Name
+type alias HeroData =
+    { name : Hero
     , alliances : List Alliance
     }
 
@@ -67,47 +96,47 @@ type alias Summary =
     }
 
 
-tusk : Hero
+tusk : HeroData
 tusk =
-    Hero Tusk [ Warrior, Savage ]
+    HeroData Tusk [ Warrior, Savage ]
 
 
-earthSpirit : Hero
+earthSpirit : HeroData
 earthSpirit =
-    Hero EarthSpirit [ Spirit, Warrior ]
+    HeroData EarthSpirit [ Spirit, Warrior ]
 
 
-juggernaut : Hero
+juggernaut : HeroData
 juggernaut =
-    Hero Juggernaut [ Brawny, Warrior ]
+    HeroData Juggernaut [ Brawny, Warrior ]
 
 
-pudge : Hero
+pudge : HeroData
 pudge =
-    Hero Pudge [ Heartless, Warrior ]
+    HeroData Pudge [ Heartless, Warrior ]
 
 
-slardar : Hero
+slardar : HeroData
 slardar =
-    Hero Slardar [ Scaled, Warrior ]
+    HeroData Slardar [ Scaled, Warrior ]
 
 
-tidehunter : Hero
+tidehunter : HeroData
 tidehunter =
-    Hero Tidehunter [ Scaled, Warrior ]
+    HeroData Tidehunter [ Scaled, Warrior ]
 
 
-tiny : Hero
+tiny : HeroData
 tiny =
-    Hero Tiny [ Primordial, Warrior ]
+    HeroData Tiny [ Primordial, Warrior ]
 
 
-trollWarlord : Hero
+trollWarlord : HeroData
 trollWarlord =
-    Hero TrollWarlord [ Troll, Warrior ]
+    HeroData TrollWarlord [ Troll, Warrior ]
 
 
-summary : List Hero -> Summary
+summary : List HeroData -> Summary
 summary heroes =
     let
         reduceAlliance : Alliance -> Summary -> Summary
@@ -138,7 +167,7 @@ summary heroes =
                     { accumulator | warrior = accumulator.warrior + 1 }
     in
     heroes
-        |> List.Extra.uniqueBy (.name >> nameToString)
+        |> List.Extra.uniqueBy (.name >> toString)
         |> List.concatMap .alliances
         |> List.foldl reduceAlliance
             { brawny = 0
@@ -152,8 +181,8 @@ summary heroes =
             }
 
 
-nameToString : Name -> String
-nameToString name =
+toString : Hero -> String
+toString name =
     case name of
         EarthSpirit ->
             "Earth Spirit"
@@ -180,13 +209,13 @@ nameToString name =
             "Tusk"
 
 
-imagePath : Name -> String
+imagePath : Hero -> String
 imagePath name =
     let
-        lowerDashFileName =
+        lowerDashFileHero =
             name
-                |> nameToString
+                |> toString
                 |> String.Extra.decapitalize
                 |> String.Extra.dasherize
     in
-    "/images/minis/" ++ lowerDashFileName ++ ".png"
+    "/images/minis/" ++ lowerDashFileHero ++ ".png"

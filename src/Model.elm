@@ -12,4 +12,4 @@ type alias Model =
 
 
 type Msg
-    = Add
+    = Add Hero
