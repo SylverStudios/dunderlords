@@ -1,7 +1,8 @@
 module Main exposing (init, main, update)
 
 import Browser
-import Hero exposing (Alliance(..))
+import Hero exposing (Alliance(..), Hero(..))
+import List.Extra
 import Model exposing (Model, Msg(..))
 import View
 
@@ -14,7 +15,7 @@ import View
 
 init : Int -> ( Model, Cmd Msg )
 init _ =
-    ( { team = [ Hero.tusk, Hero.pudge, Hero.tidehunter, Hero.slardar ] }, Cmd.none )
+    ( { team = [ Tusk, Pudge, Tidehunter, Slardar ] }, Cmd.none )
 
 
 
@@ -26,8 +27,11 @@ init _ =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update message model =
     case message of
-        Add ->
-            ( { model | team = Hero.tusk :: model.team }, Cmd.none )
+        Add hero ->
+            ( { model | team = hero :: model.team }, Cmd.none )
+
+        Remove hero ->
+            ( { model | team = List.Extra.remove hero model.team }, Cmd.none )
 
 
 

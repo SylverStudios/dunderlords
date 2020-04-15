@@ -1,10 +1,11 @@
 module View exposing (view)
 
-import Hero exposing (Alliance(..), Hero)
+import Hero exposing (Alliance(..), Hero(..), HeroData)
 import Html exposing (Html, button, div, h1, h2, header, img, section, text)
 import Html.Attributes exposing (alt, class, src)
 import Html.Events exposing (onClick)
 import Model exposing (Model, Msg(..))
+import View.Icon
 
 
 view : Model -> Html Msg
@@ -32,42 +33,37 @@ team heroes =
         -- Probably better as an icon
         addHero : Html Msg
         addHero =
-            button [ class "round", onClick Add ] [ text "+" ]
+            button [ class "round", onClick (Add Tusk) ] [ text "+" ]
     in
-    div [ class "team" ] (List.map heroMini heroes ++ [ addHero ])
+    div [ class "team" ] (List.map (heroMini Remove) heroes ++ [ addHero ])
 
 
 heroPool : Html Msg
 heroPool =
     div [ class "pool" ]
-        [ heroMini Hero.earthSpirit
-        , heroMini Hero.juggernaut
-        , heroMini Hero.pudge
-        , heroMini Hero.slardar
-        , heroMini Hero.tidehunter
-        , heroMini Hero.tiny
-        , heroMini Hero.trollWarlord
-        , heroMini Hero.tusk
+        [ heroMini Add EarthSpirit
+        , heroMini Add Juggernaut
+        , heroMini Add Pudge
+        , heroMini Add Slardar
+        , heroMini Add Tidehunter
+        , heroMini Add Tiny
+        , heroMini Add TrollWarlord
+        , heroMini Add Tusk
         ]
 
 
-heroMini : Hero -> Html Msg
-heroMini { name } =
-    let
-        heroName =
-            Hero.nameToString name
-    in
-    div []
-        [ img [ class "hero", alt (heroName ++ " Mini Badge"), src (Hero.imagePath name) ] []
-        , text heroName
-        ]
+heroMini : (Hero -> msg) -> Hero -> Html msg
+heroMini msg hero =
+    hero |> View.Icon.icon |> View.Icon.withMsg msg |> View.Icon.toHtml
 
 
 allianceSummary : List Hero -> Html Msg
 allianceSummary heroes =
     let
         allianceCount =
-            Hero.summary heroes
+            heroes
+                |> List.map Hero.info
+                |> Hero.summary
     in
     div [ class "alliance-summary" ]
         [ div [] [ img [ class "alliance", alt "Brawny Alliance Badge", src "/images/alliances/brawny.png" ] [], text <| "Brawny: " ++ String.fromInt allianceCount.brawny ]
