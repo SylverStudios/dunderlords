@@ -1,7 +1,7 @@
 module MainTest exposing (unitTest, viewTest)
 
 import Expect
-import Hero
+import Hero exposing (Hero(..))
 import Main
 import Model exposing (Model, Msg(..))
 import Test exposing (..)
@@ -17,10 +17,25 @@ unitTest =
     describe "simple unit test"
         [ test "Add adds a tusk" <|
             \() ->
-                Main.update Add (Model [])
+                Main.update (Add Tusk) (Model [])
                     |> Tuple.first
                     |> .team
-                    |> Expect.equal [ Hero.tusk ]
+                    |> Expect.equal [ Tusk ]
+        , test "Add 2 tusks" <|
+            \() ->
+                Main.update (Add Tusk) (Model [])
+                    |> Tuple.first
+                    |> Main.update (Add Tusk)
+                    |> Tuple.first
+                    |> .team
+                    |> Expect.equal [ Tusk, Tusk ]
+        , test "Remove a tusks" <|
+            \() ->
+                Model [ Tusk ]
+                    |> Main.update (Remove Tusk)
+                    |> Tuple.first
+                    |> .team
+                    |> Expect.equal []
         ]
 
 
