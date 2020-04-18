@@ -1,4 +1,4 @@
-module Model.Alliance exposing (Alliance(..), imagePath)
+module Model.Alliance exposing (Alliance(..), imagePath, toString)
 
 
 type Alliance
