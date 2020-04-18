@@ -1,7 +1,6 @@
-module Hero exposing
-    ( Alliance(..)
-    , Hero(..)
-    , HeroData
+module Model.Hero exposing
+    ( Hero(..)
+    , Summary
     , earthSpirit
     , imagePath
     , info
@@ -17,18 +16,8 @@ module Hero exposing
     )
 
 import List.Extra
+import Model.Alliance exposing (Alliance(..))
 import String.Extra
-
-
-type Alliance
-    = Brawny
-    | Heartless
-    | Primordial
-    | Savage
-    | Scaled
-    | Spirit
-    | Troll
-    | Warrior
 
 
 type Hero

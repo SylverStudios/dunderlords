@@ -17,12 +17,6 @@ header {
     }
 }
 
-img {
-    &.alliance {
-        width: 2rem;
-        height: 2rem;
-    }
-}
 
 .team {
     display: flex
@@ -34,4 +28,47 @@ button {
         height: 2rem;
         width: 2rem;
     }
+}
+
+.alliance-summary {
+    display: flex;
+}
+
+.alliance {
+    display: flex;
+}
+
+.alliance-img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.counter {
+    display: flex;
+    flex-grow: 1;
+    width: 2rem;
+    height: 2rem;
+}
+
+.tier {
+    display: flex;
+    flex-direction: column;
+    // flex-grow: 1;
+    width: 0.66rem;
+    height: 2rem;
+}
+
+.filled {
+    flex-grow: 1;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: black;
+    background-color: blue;
+}
+
+.hollow {
+    flex-grow: 1;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: black;
 }

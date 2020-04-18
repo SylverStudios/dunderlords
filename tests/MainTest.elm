@@ -1,9 +1,9 @@
 module MainTest exposing (unitTest, viewTest)
 
 import Expect
-import Hero exposing (Hero(..))
 import Main
 import Model exposing (Model, Msg(..))
+import Model.Hero exposing (Hero(..))
 import Test exposing (..)
 import Test.Html.Query as Query
 import Test.Html.Selector exposing (tag, text)

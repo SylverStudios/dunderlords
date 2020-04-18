@@ -1,10 +1,12 @@
 module View exposing (view)
 
-import Hero exposing (Alliance(..), Hero(..), HeroData)
 import Html exposing (Html, button, div, h1, h2, header, img, section, text)
-import Html.Attributes exposing (alt, class, src)
+import Html.Attributes exposing (class, src)
 import Html.Events exposing (onClick)
 import Model exposing (Model, Msg(..))
+import Model.Alliance exposing (Alliance(..))
+import Model.Hero exposing (Hero(..))
+import View.Counter
 import View.Icon
 
 
@@ -60,18 +62,54 @@ heroMini msg hero =
 allianceSummary : List Hero -> Html Msg
 allianceSummary heroes =
     let
-        allianceCount =
+        summary =
             heroes
-                |> List.map Hero.info
-                |> Hero.summary
+                |> List.map Model.Hero.info
+                |> Model.Hero.summary
     in
     div [ class "alliance-summary" ]
-        [ div [] [ img [ class "alliance", alt "Brawny Alliance Badge", src "/images/alliances/brawny.png" ] [], text <| "Brawny: " ++ String.fromInt allianceCount.brawny ]
-        , div [] [ img [ class "alliance", alt "Heartless Alliance Badge", src "/images/alliances/heartless.png" ] [], text <| "Heartless: " ++ String.fromInt allianceCount.heartless ]
-        , div [] [ img [ class "alliance", alt "Primordial Alliance Badge", src "/images/alliances/primordial.png" ] [], text <| "Primordial: " ++ String.fromInt allianceCount.primordial ]
-        , div [] [ img [ class "alliance", alt "Savage Alliance Badge", src "/images/alliances/savage.png" ] [], text <| "Savage: " ++ String.fromInt allianceCount.savage ]
-        , div [] [ img [ class "alliance", alt "Scaled Alliance Badge", src "/images/alliances/scaled.png" ] [], text <| "Scaled: " ++ String.fromInt allianceCount.scaled ]
-        , div [] [ img [ class "alliance", alt "Spirit Alliance Badge", src "/images/alliances/spirit.png" ] [], text <| "Spirit: " ++ String.fromInt allianceCount.spirit ]
-        , div [] [ img [ class "alliance", alt "Troll Alliance Badge", src "/images/alliances/troll.png" ] [], text <| "Troll: " ++ String.fromInt allianceCount.troll ]
-        , div [] [ img [ class "alliance", alt "Warrior Alliance Badge", src "/images/alliances/warrior.png" ] [], text <| "Warrior: " ++ String.fromInt allianceCount.warrior ]
+        [ allianceCounter Brawny summary
+        , allianceCounter Heartless summary
+        , allianceCounter Primordial summary
+        , allianceCounter Savage summary
+        , allianceCounter Scaled summary
+        , allianceCounter Spirit summary
+        , allianceCounter Troll summary
+        , allianceCounter Warrior summary
         ]
+
+
+allianceCounter : Alliance -> Model.Hero.Summary -> Html msg
+allianceCounter alliance summary =
+    let
+        image : Int -> Html msg
+        image memberCount =
+            div [ class "alliance" ]
+                [ img [ class "alliance-img", src (Model.Alliance.imagePath alliance) ] []
+                , View.Counter.counter alliance memberCount |> View.Counter.toHtml
+                ]
+    in
+    case alliance of
+        Brawny ->
+            image summary.brawny
+
+        Heartless ->
+            image summary.heartless
+
+        Primordial ->
+            image summary.primordial
+
+        Savage ->
+            image summary.savage
+
+        Scaled ->
+            image summary.scaled
+
+        Spirit ->
+            image summary.spirit
+
+        Troll ->
+            image summary.troll
+
+        Warrior ->
+            image summary.warrior

@@ -1,7 +1,7 @@
 module HeroTest exposing (summaryTest)
 
 import Expect
-import Hero exposing (Hero(..))
+import Model.Hero as Hero exposing (Hero(..))
 import Test exposing (Test, describe, test)
 
 
@@ -17,4 +17,11 @@ summaryTest =
                     |> Hero.summary
                     |> .savage
                     |> Expect.equal 1
+        , test "counts correctly" <|
+            \() ->
+                [ Slardar, Tidehunter ]
+                    |> List.map Hero.info
+                    |> Hero.summary
+                    |> .scaled
+                    |> Expect.equal 2
         ]

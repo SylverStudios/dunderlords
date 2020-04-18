@@ -1,9 +1,9 @@
 module View.Icon exposing (icon, toHtml, withMsg)
 
-import Hero exposing (Hero)
-import Html exposing (Html, div, h2, img, li, ol, text)
+import Html exposing (Html, div, img, text)
 import Html.Attributes exposing (alt, class, src)
 import Html.Events exposing (onClick)
+import Model.Hero exposing (Hero)
 
 
 type Icon msg
@@ -23,7 +23,7 @@ toHtml : Icon msg -> Html msg
 toHtml (Icon options hero) =
     let
         heroName =
-            Hero.toString hero
+            Model.Hero.toString hero
 
         attrs =
             case options.onClick of
@@ -34,7 +34,7 @@ toHtml (Icon options hero) =
                     [ onClick (msg hero) ]
     in
     div []
-        [ img (attrs ++ [ class "hero", alt (heroName ++ " Mini Badge"), src (Hero.imagePath hero) ]) []
+        [ img (attrs ++ [ class "hero", alt (heroName ++ " Mini Badge"), src (Model.Hero.imagePath hero) ]) []
         , text heroName
         ]
 
