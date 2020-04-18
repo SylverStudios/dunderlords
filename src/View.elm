@@ -1,7 +1,7 @@
 module View exposing (view)
 
 import Html exposing (Html, button, div, h1, h2, header, img, section, text)
-import Html.Attributes exposing (alt, class, src)
+import Html.Attributes exposing (class, src)
 import Html.Events exposing (onClick)
 import Model exposing (Model, Msg(..))
 import Model.Alliance exposing (Alliance(..))

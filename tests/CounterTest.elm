@@ -5,7 +5,7 @@ import Model exposing (Model, Msg(..))
 import Model.Hero exposing (Hero(..))
 import Test exposing (..)
 import Test.Html.Query as Query
-import Test.Html.Selector exposing (class, tag, text)
+import Test.Html.Selector exposing (class)
 import View
 
 
