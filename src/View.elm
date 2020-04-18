@@ -1,5 +1,6 @@
 module View exposing (view)
 
+import Dict.Any
 import Html exposing (Html, button, div, h1, h2, header, img, section, text)
 import Html.Attributes exposing (class, src)
 import Html.Events exposing (onClick)
@@ -62,54 +63,20 @@ heroMini msg hero =
 allianceSummary : List Hero -> Html Msg
 allianceSummary heroes =
     let
-        summary =
+        activeAlliances =
             heroes
-                |> List.map Model.Hero.info
-                |> Model.Hero.summary
+                |> Model.Hero.allianceCount
+                |> Dict.Any.toList
+                |> List.sortBy Tuple.second
+                |> List.reverse
+                |> List.map (\( alliance, count ) -> allianceCounter alliance count)
     in
-    div [ class "alliance-summary" ]
-        [ allianceCounter Brawny summary
-        , allianceCounter Heartless summary
-        , allianceCounter Primordial summary
-        , allianceCounter Savage summary
-        , allianceCounter Scaled summary
-        , allianceCounter Spirit summary
-        , allianceCounter Troll summary
-        , allianceCounter Warrior summary
+    div [ class "alliance-summary" ] activeAlliances
+
+
+allianceCounter : Alliance -> Int -> Html msg
+allianceCounter alliance memberCount =
+    div [ class "alliance" ]
+        [ img [ class "alliance-img", src (Model.Alliance.imagePath alliance) ] []
+        , View.Counter.counter alliance memberCount |> View.Counter.toHtml
         ]
-
-
-allianceCounter : Alliance -> Model.Hero.Summary -> Html msg
-allianceCounter alliance summary =
-    let
-        image : Int -> Html msg
-        image memberCount =
-            div [ class "alliance" ]
-                [ img [ class "alliance-img", src (Model.Alliance.imagePath alliance) ] []
-                , View.Counter.counter alliance memberCount |> View.Counter.toHtml
-                ]
-    in
-    case alliance of
-        Brawny ->
-            image summary.brawny
-
-        Heartless ->
-            image summary.heartless
-
-        Primordial ->
-            image summary.primordial
-
-        Savage ->
-            image summary.savage
-
-        Scaled ->
-            image summary.scaled
-
-        Spirit ->
-            image summary.spirit
-
-        Troll ->
-            image summary.troll
-
-        Warrior ->
-            image summary.warrior

@@ -1,13 +1,13 @@
 module Model.Hero exposing
-    ( Hero(..)
-    , Summary
+    ( AllianceCount
+    , Hero(..)
+    , allianceCount
     , earthSpirit
     , imagePath
     , info
     , juggernaut
     , pudge
     , slardar
-    , summary
     , tidehunter
     , tiny
     , toString
@@ -15,6 +15,7 @@ module Model.Hero exposing
     , tusk
     )
 
+import Dict.Any exposing (AnyDict)
 import List.Extra
 import Model.Alliance exposing (Alliance(..))
 import String.Extra
@@ -73,18 +74,6 @@ type alias HeroData =
     }
 
 
-type alias Summary =
-    { brawny : Int
-    , heartless : Int
-    , primordial : Int
-    , savage : Int
-    , scaled : Int
-    , spirit : Int
-    , troll : Int
-    , warrior : Int
-    }
-
-
 tusk : HeroData
 tusk =
     HeroData Tusk [ Warrior, Savage ]
@@ -125,49 +114,31 @@ trollWarlord =
     HeroData TrollWarlord [ Troll, Warrior ]
 
 
-summary : List HeroData -> Summary
-summary heroes =
+type alias AllianceCount =
+    AnyDict String Alliance Int
+
+
+allianceCount : List Hero -> AllianceCount
+allianceCount heroes =
     let
-        reduceAlliance : Alliance -> Summary -> Summary
-        reduceAlliance alliance accumulator =
-            case alliance of
-                Brawny ->
-                    { accumulator | brawny = accumulator.brawny + 1 }
+        tally : Alliance -> AllianceCount -> AllianceCount
+        tally alliance =
+            Dict.Any.update alliance
+                (\maybeCount ->
+                    case maybeCount of
+                        Just count ->
+                            Just (count + 1)
 
-                Heartless ->
-                    { accumulator | heartless = accumulator.heartless + 1 }
-
-                Primordial ->
-                    { accumulator | primordial = accumulator.primordial + 1 }
-
-                Savage ->
-                    { accumulator | savage = accumulator.savage + 1 }
-
-                Scaled ->
-                    { accumulator | scaled = accumulator.scaled + 1 }
-
-                Spirit ->
-                    { accumulator | spirit = accumulator.spirit + 1 }
-
-                Troll ->
-                    { accumulator | troll = accumulator.troll + 1 }
-
-                Warrior ->
-                    { accumulator | warrior = accumulator.warrior + 1 }
+                        Nothing ->
+                            Just 1
+                )
     in
     heroes
-        |> List.Extra.uniqueBy (.name >> toString)
+        |> List.Extra.uniqueBy toString
+        |> List.map info
         |> List.concatMap .alliances
-        |> List.foldl reduceAlliance
-            { brawny = 0
-            , heartless = 0
-            , primordial = 0
-            , savage = 0
-            , scaled = 0
-            , spirit = 0
-            , troll = 0
-            , warrior = 0
-            }
+        |> List.foldl tally
+            (Dict.Any.empty Model.Alliance.toString)
 
 
 toString : Hero -> String
