@@ -1,7 +1,7 @@
 module HeroTest exposing (summaryTest)
 
 import Expect
-import Hero exposing (Hero(..))
+import Model.Hero as Hero exposing (Hero(..))
 import Test exposing (Test, describe, test)
 
 
