@@ -1,9 +1,9 @@
 module Main exposing (init, main, update)
 
 import Browser
-import Hero exposing (Alliance(..), Hero(..))
 import List.Extra
 import Model exposing (Model, Msg(..))
+import Model.Hero exposing (Hero(..))
 import View
 
 

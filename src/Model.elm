@@ -3,7 +3,7 @@ module Model exposing
     , Msg(..)
     )
 
-import Hero exposing (Hero)
+import Model.Hero exposing (Hero)
 
 
 type alias Model =
