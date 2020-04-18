@@ -67,6 +67,8 @@ allianceSummary heroes =
             heroes
                 |> Model.Hero.allianceCount
                 |> Dict.Any.toList
+                |> List.sortBy Tuple.second
+                |> List.reverse
                 |> List.map (\( alliance, count ) -> allianceCounter alliance count)
     in
     div [ class "alliance-summary" ] activeAlliances
