@@ -39,7 +39,7 @@ counter Scaled 2
 
 -}
 
-import Html exposing (Html, div, text)
+import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import Model.Alliance exposing (Alliance(..))
 
@@ -110,36 +110,36 @@ toHtml (Counter { shape } count) =
         OneByThree ->
             div [ class "counter" ]
                 [ div [ class "tier" ]
-                    [ bubble (count > 1)
-                    , bubble (count > 2)
-                    , bubble (count > 3)
+                    [ bubble (count >= 1)
+                    , bubble (count >= 2)
+                    , bubble (count >= 3)
                     ]
                 ]
 
         ThreeByTwo ->
             div [ class "counter" ]
                 [ div [ class "tier" ]
-                    [ bubble (count > 1), bubble (count > 2) ]
+                    [ bubble (count >= 1), bubble (count >= 2) ]
                 , div [ class "tier" ]
-                    [ bubble (count > 3), bubble (count > 4) ]
+                    [ bubble (count >= 3), bubble (count >= 4) ]
                 , div [ class "tier" ]
-                    [ bubble (count > 5), bubble (count > 6) ]
+                    [ bubble (count >= 5), bubble (count >= 6) ]
                 ]
 
         TwoByThree ->
             div [ class "counter" ]
                 [ div [ class "tier" ]
-                    [ bubble (count > 1), bubble (count > 2), bubble (count > 3) ]
+                    [ bubble (count >= 1), bubble (count >= 2), bubble (count >= 3) ]
                 , div [ class "tier" ]
-                    [ bubble (count > 4), bubble (count > 5), bubble (count > 6) ]
+                    [ bubble (count >= 4), bubble (count >= 5), bubble (count >= 6) ]
                 ]
 
         TwoByTwo ->
             div [ class "counter" ]
                 [ div [ class "tier" ]
-                    [ bubble (count > 1), bubble (count > 2) ]
+                    [ bubble (count >= 1), bubble (count >= 2) ]
                 , div [ class "tier" ]
-                    [ bubble (count > 3), bubble (count > 4) ]
+                    [ bubble (count >= 3), bubble (count >= 4) ]
                 ]
 
 

@@ -17,4 +17,11 @@ summaryTest =
                     |> Hero.summary
                     |> .savage
                     |> Expect.equal 1
+        , test "counts correctly" <|
+            \() ->
+                [ Slardar, Tidehunter ]
+                    |> List.map Hero.info
+                    |> Hero.summary
+                    |> .scaled
+                    |> Expect.equal 2
         ]
