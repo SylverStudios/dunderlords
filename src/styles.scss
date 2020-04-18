@@ -1,6 +1,22 @@
+/* Define a custom web font */
+@font-face {
+    font-family: 'Radiance';
+    src:    url('/fonts/Radiance-Distressed-Black.woff2') format('woff2'),
+            url('/fonts/Radiance-Regular.woff') format('woff'),
+            url('/fonts/Radiance-Bold.woff') format('woff'),
+            url('/fonts/Radiance-Black.woff') format('woff'),
+}
+
 body {
     background-color: #ddd;
     margin-top: 20px;
+    font-family: "Radiance", sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Radiance", sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
 }
 
 .container {
