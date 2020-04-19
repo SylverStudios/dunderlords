@@ -43,6 +43,11 @@ button {
     }
 }
 
+.pool {
+    display: flex;
+    justify-content: space-between;
+}
+
 // Alliance Summary
 .alliances {
     flex-basis: 40%;

@@ -62,7 +62,7 @@ viewTest =
                 Model []
                     |> View.view
                     |> Query.fromHtml
-                    |> Query.findAll [ tag "button" ]
+                    |> Query.findAll [ tag "h2" ]
                     |> Query.first
-                    |> Query.has [ text "+" ]
+                    |> Query.has [ text "Team" ]
         ]

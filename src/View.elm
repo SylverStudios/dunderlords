@@ -6,6 +6,7 @@ import Html.Attributes exposing (class, src)
 import Html.Events exposing (onClick)
 import Model exposing (Model, Msg(..))
 import Model.Alliance exposing (Alliance(..))
+import Model.Crew
 import Model.Hero exposing (Hero(..))
 import View.Counter
 import View.Icon
@@ -20,24 +21,41 @@ view model =
             , teamSection model
             ]
         , section []
-            [ h2 [] [ text "Hero Pool" ]
-            , heroPool
+            [ header [] [ h2 [] [ text "Hero Pool" ] ]
+            , heroPool model.team
             ]
         ]
 
 
-heroPool : Html Msg
-heroPool =
+heroPool : List Hero -> Html Msg
+heroPool heroes =
     div [ class "pool" ]
-        [ heroMini Add EarthSpirit
-        , heroMini Add Juggernaut
-        , heroMini Add Pudge
-        , heroMini Add Slardar
-        , heroMini Add Tidehunter
-        , heroMini Add Tiny
-        , heroMini Add TrollWarlord
-        , heroMini Add Tusk
+        [ div []
+            [ heroMini Add EarthSpirit
+            , heroMini Add Juggernaut
+            , heroMini Add Pudge
+            , heroMini Add Slardar
+            , heroMini Add Tidehunter
+            , heroMini Add Tiny
+            , heroMini Add TrollWarlord
+            , heroMini Add Tusk
+            ]
+        , suggestion heroes
         ]
+
+
+suggestion : List Hero -> Html Msg
+suggestion heroes =
+    case Model.Crew.suggest heroes of
+        Just suggestedHero ->
+            div [ class "suggestion" ]
+                [ div [ class "header" ] [ h3 [] [ text "Suggestion" ] ]
+                , heroMini Add suggestedHero
+                , alliances (suggestedHero :: heroes)
+                ]
+
+        Nothing ->
+            text ""
 
 
 heroMini : (Hero -> msg) -> Hero -> Html msg
@@ -54,7 +72,7 @@ teamSection { team } =
         atLeastOne :: remaining ->
             div [ class "crew-summary" ]
                 [ crew atLeastOne remaining
-                , alliances (atLeastOne :: remaining)
+                , allianceSection (atLeastOne :: remaining)
                 ]
 
 
@@ -76,26 +94,31 @@ crew firstHero remaining =
         ]
 
 
+allianceSection : List Hero -> Html Msg
+allianceSection heroes =
+    div [ class "alliances" ]
+        [ div [ class "header" ] [ h3 [] [ text "Alliances" ] ]
+        , alliances heroes
+        ]
+
+
+{-| Count alliance members and display them using bubbles
+Display the alliances, and the bubbles from Left to Right
+-}
 alliances : List Hero -> Html Msg
 alliances heroes =
     let
-        activeAlliances =
-            heroes
-                |> Model.Hero.allianceCount
-                |> Dict.Any.toList
-                |> List.sortBy Tuple.second
-                |> List.reverse
-                |> List.map (\( alliance, count ) -> allianceCounter alliance count)
+        allianceCounter : Alliance -> Int -> Html msg
+        allianceCounter alliance memberCount =
+            div [ class "alliance" ]
+                [ img [ class "alliance-img", src (Model.Alliance.imagePath alliance) ] []
+                , View.Counter.counter alliance memberCount |> View.Counter.toHtml
+                ]
     in
-    div [ class "alliances" ]
-        [ div [ class "header" ] [ h3 [] [ text "Alliances" ] ]
-        , div [ class "alliance-icons" ] activeAlliances
-        ]
-
-
-allianceCounter : Alliance -> Int -> Html msg
-allianceCounter alliance memberCount =
-    div [ class "alliance" ]
-        [ img [ class "alliance-img", src (Model.Alliance.imagePath alliance) ] []
-        , View.Counter.counter alliance memberCount |> View.Counter.toHtml
-        ]
+    heroes
+        |> Model.Crew.allianceCount
+        |> Dict.Any.toList
+        |> List.sortBy Tuple.second
+        |> List.reverse
+        |> List.map (\( alliance, count ) -> allianceCounter alliance count)
+        |> div [ class "alliance-icons" ]
