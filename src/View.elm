@@ -13,10 +13,16 @@ import View.Icon
 
 view : Model -> Html Msg
 view model =
+    let
+        refreshButton : Html Msg
+        refreshButton =
+            button [ class "rounded", onClick Refresh ]
+                [ img [ src "/images/refresh-24px.svg" ] [] ]
+    in
     div [ class "container" ]
         [ header [] [ h1 [] [ text "Dunderlords Alliance Builder" ] ]
         , section []
-            [ h2 [] [ text "Team" ]
+            [ div [ class "section-header" ] [ h2 [] [ text "Team" ], refreshButton ]
             , team model.team
             ]
         , section []

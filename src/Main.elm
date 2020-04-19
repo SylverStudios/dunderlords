@@ -33,6 +33,9 @@ update message model =
         Remove hero ->
             ( { model | team = List.Extra.remove hero model.team }, Cmd.none )
 
+        Refresh ->
+            ( { model | team = [] }, Cmd.none )
+
 
 
 -- ---------------------------

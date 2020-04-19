@@ -38,8 +38,18 @@ header {
 }
 
 button {
-    &.round {
-        border-radius: 50%;
+    cursor:pointer;
+    display: flex;
+    justify-content: center;
+
+    // &.round {
+    //     border-radius: 50%;
+    //     height: 2rem;
+    //     width: 2rem;
+    // }
+
+    &.rounded {
+        border-radius: 0.5rem;
         height: 2rem;
         width: 2rem;
     }
@@ -86,4 +96,9 @@ button {
     border-radius: 3px;
     border-style: solid;
     border-color: black;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
 }
