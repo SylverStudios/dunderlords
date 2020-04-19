@@ -6,6 +6,7 @@ import Html.Attributes exposing (class, src)
 import Html.Events exposing (onClick)
 import Model exposing (Model, Msg(..))
 import Model.Alliance exposing (Alliance(..))
+import Model.Crew
 import Model.Hero exposing (Hero(..))
 import View.Counter
 import View.Icon
@@ -81,7 +82,7 @@ alliances heroes =
     let
         activeAlliances =
             heroes
-                |> Model.Hero.allianceCount
+                |> Model.Crew.allianceCount
                 |> Dict.Any.toList
                 |> List.sortBy Tuple.second
                 |> List.reverse
