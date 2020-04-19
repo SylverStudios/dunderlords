@@ -1,7 +1,7 @@
 {
     "author": "Sylver Studios",
     "name": "dunderlords",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Dota Underlords Alliance Builder",
     "main": "index.js",
     "scripts": {
@@ -44,9 +44,7 @@
         "webpack-dev-server": "^3.9.0",
         "webpack-merge": "^4.2.2"
     },
-    "dependencies": {
-        "purecss": "^1.0.1"
-    },
+    "dependencies": {},
     "prettier": {
         "tabWidth": 4
     }
