@@ -1,4 +1,9 @@
-module Model.Crew exposing (AllianceCount, allianceCount, rankMatches, suggest)
+module Model.Crew exposing
+    ( AllianceCount
+    , allianceCount
+    , rankMatches
+    , suggest
+    )
 
 import Dict.Any exposing (AnyDict)
 import List.Extra
