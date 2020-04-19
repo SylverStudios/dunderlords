@@ -1,7 +1,7 @@
 module View exposing (view)
 
 import Dict.Any
-import Html exposing (Html, button, div, h1, h2, header, img, section, text)
+import Html exposing (Html, button, div, h1, h2, header, img, section, span, text)
 import Html.Attributes exposing (class, src)
 import Html.Events exposing (onClick)
 import Model exposing (Model, Msg(..))
@@ -13,10 +13,16 @@ import View.Icon
 
 view : Model -> Html Msg
 view model =
+    let
+        refreshButton : Html Msg
+        refreshButton =
+            button [ class "rounded", onClick Refresh ]
+                [ img [ src "/images/refresh-24px.svg" ] [] ]
+    in
     div [ class "container" ]
         [ header [] [ h1 [] [ text "Dunderlords Alliance Builder" ] ]
         , section []
-            [ h2 [] [ text "Team" ]
+            [ header [] [ h2 [] [ text "Team" ], refreshButton ]
             , team model.team
             ]
         , section []
@@ -33,12 +39,15 @@ view model =
 team : List Hero -> Html Msg
 team heroes =
     let
-        -- Probably better as an icon
-        addHero : Html Msg
-        addHero =
-            button [ class "round", onClick (Add Tusk) ] [ text "+" ]
+        lineupOrEmtpyText =
+            case heroes of
+                [] ->
+                    [ span [ class "empty-team" ] [ text "Click a Hero below to begin building a team" ] ]
+
+                list ->
+                    List.map (heroMini Remove) list
     in
-    div [ class "team" ] (List.map (heroMini Remove) heroes ++ [ addHero ])
+    div [ class "team" ] lineupOrEmtpyText
 
 
 heroPool : Html Msg
