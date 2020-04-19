@@ -1,9 +1,9 @@
-module Model.Crew exposing (AllianceCount, allianceCount)
+module Model.Crew exposing (AllianceCount, allianceCount, rankMatches, suggest)
 
 import Dict.Any exposing (AnyDict)
 import List.Extra
 import Model.Alliance exposing (Alliance(..))
-import Model.Hero exposing (Hero)
+import Model.Hero exposing (Hero, HeroData)
 
 
 type alias AllianceCount =
@@ -31,3 +31,43 @@ allianceCount heroes =
         |> List.concatMap .alliances
         |> List.foldl tally
             (Dict.Any.empty Model.Alliance.toString)
+
+
+{-| Basic suggestions are first based on matching alliance
+List all heroes, sort by alliance matches
+no secondary sort for now, take the top 3
+-}
+suggest : List Hero -> Maybe Hero
+suggest heroes =
+    heroes
+        |> rankMatches
+        |> List.head
+        |> Maybe.map (Tuple.first >> .name)
+
+
+rankMatches : List Hero -> List ( HeroData, Int )
+rankMatches myHeroes =
+    let
+        myAlliances =
+            myHeroes
+                |> allianceCount
+                |> Dict.Any.keys
+
+        countMatchingAlliances : { x | alliances : List Alliance } -> Int
+        countMatchingAlliances { alliances } =
+            alliances
+                |> List.foldl
+                    (\alliance accumulator ->
+                        if List.member alliance myAlliances then
+                            accumulator + 1
+
+                        else
+                            accumulator
+                    )
+                    0
+    in
+    Model.Hero.allHeroes
+        |> List.filter (\hero -> not (List.member hero.name myHeroes))
+        |> List.map (\hero -> ( hero, countMatchingAlliances hero ))
+        |> List.sortBy Tuple.second
+        |> List.reverse

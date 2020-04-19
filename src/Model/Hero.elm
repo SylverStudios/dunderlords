@@ -1,16 +1,10 @@
 module Model.Hero exposing
     ( Hero(..)
-    , earthSpirit
+    , HeroData
+    , allHeroes
     , imagePath
     , info
-    , juggernaut
-    , pudge
-    , slardar
-    , tidehunter
-    , tiny
     , toString
-    , trollWarlord
-    , tusk
     )
 
 import Model.Alliance exposing (Alliance(..))
@@ -54,6 +48,19 @@ info hero =
 
         Tusk ->
             tusk
+
+
+allHeroes : List HeroData
+allHeroes =
+    [ earthSpirit
+    , juggernaut
+    , pudge
+    , slardar
+    , tidehunter
+    , tiny
+    , trollWarlord
+    , tusk
+    ]
 
 
 {-| Tusk (A Hero Type, has similar fields to others, type alias?)
