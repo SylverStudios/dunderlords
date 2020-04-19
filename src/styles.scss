@@ -24,15 +24,11 @@ h1, h2, h3, h4, h5 {
     margin-right: auto;
 }
 
-header {
+header, .header {
     display: flex;
     align-items: center;
 }
 
-
-.team {
-    display: flex
-}
 
 button {
     cursor:pointer;
@@ -47,7 +43,12 @@ button {
     }
 }
 
-.alliance-summary {
+// Alliance Summary
+.alliances {
+    flex-basis: 40%;
+}
+
+.alliance-icons {
     display: flex;
 }
 
@@ -90,7 +91,22 @@ button {
     border-color: black;
 }
 
-.empty-team {
+
+// Crew Section
+.crew-summary {
+    display: flex;
+    justify-content: space-between;
+}
+
+.crew {
+    flex-basis: 60%;
+}
+
+.crew-empty {
     color: blue;
     margin-left: 5rem;
+}
+
+.crew-icons {
+    display: flex
 }
