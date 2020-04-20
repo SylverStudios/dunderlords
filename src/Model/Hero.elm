@@ -1,22 +1,12 @@
 module Model.Hero exposing
-    ( AllianceCount
-    , Hero(..)
-    , allianceCount
-    , earthSpirit
+    ( Hero(..)
+    , HeroData
+    , allHeroes
     , imagePath
     , info
-    , juggernaut
-    , pudge
-    , slardar
-    , tidehunter
-    , tiny
     , toString
-    , trollWarlord
-    , tusk
     )
 
-import Dict.Any exposing (AnyDict)
-import List.Extra
 import Model.Alliance exposing (Alliance(..))
 import String.Extra
 
@@ -278,6 +268,19 @@ info hero =
 
         VoidSpirit ->
             voidSpirit
+
+
+allHeroes : List HeroData
+allHeroes =
+    [ earthSpirit
+    , juggernaut
+    , pudge
+    , slardar
+    , tidehunter
+    , tiny
+    , trollWarlord
+    , tusk
+    ]
 
 
 {-| Tusk (A Hero Type, has similar fields to others, type alias?)
@@ -607,33 +610,6 @@ windranger =
 witchDoctor : HeroData
 witchDoctor =
     HeroData WitchDoctor [ Troll, Warlock ]
-
-
-type alias AllianceCount =
-    AnyDict String Alliance Int
-
-
-allianceCount : List Hero -> AllianceCount
-allianceCount heroes =
-    let
-        tally : Alliance -> AllianceCount -> AllianceCount
-        tally alliance =
-            Dict.Any.update alliance
-                (\maybeCount ->
-                    case maybeCount of
-                        Just count ->
-                            Just (count + 1)
-
-                        Nothing ->
-                            Just 1
-                )
-    in
-    heroes
-        |> List.Extra.uniqueBy toString
-        |> List.map info
-        |> List.concatMap .alliances
-        |> List.foldl tally
-            (Dict.Any.empty Model.Alliance.toString)
 
 
 toString : Hero -> String
