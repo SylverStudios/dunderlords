@@ -29,5 +29,8 @@ crewTest =
             \() ->
                 [ Slardar, Tidehunter ]
                     |> Model.Crew.suggest
-                    |> Expect.equal (Just Tusk)
+                    |> Expect.all
+                        [ Expect.notEqual (Just Slardar)
+                        , Expect.notEqual (Just Tidehunter)
+                        ]
         ]

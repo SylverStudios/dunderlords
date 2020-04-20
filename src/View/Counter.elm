@@ -45,7 +45,9 @@ import Model.Alliance exposing (Alliance(..))
 
 
 type Shape
-    = OneByThree
+    = OneByOne
+    | OneByTwo
+    | OneByThree
     | ThreeByTwo
     | TwoByThree
     | TwoByTwo
@@ -79,11 +81,67 @@ Scaled
 counter : Alliance -> Int -> Counter
 counter alliance =
     case alliance of
+        Assassin ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = TwoByThree }
+
+        Bloodbound ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = OneByTwo }
+
         Brawny ->
             Counter { color = "red", shape = TwoByTwo }
 
+        Brute ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = TwoByTwo }
+
+        Champion ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = OneByOne }
+
+        Deadeye ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = OneByOne }
+
+        Demon ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = OneByOne }
+
+        Dragon ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = OneByTwo }
+
+        Druid ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = TwoByTwo }
+
+        Healer ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = TwoByTwo }
+
         Heartless ->
             Counter { color = "grey", shape = ThreeByTwo }
+
+        Human ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = ThreeByTwo }
+
+        Hunter ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = TwoByThree }
+
+        Insect ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = TwoByThree }
+
+        Knight ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = TwoByThree }
+
+        Mage ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = TwoByThree }
 
         Primordial ->
             Counter { color = "light blue", shape = ThreeByTwo }
@@ -97,8 +155,24 @@ counter alliance =
         Spirit ->
             Counter { color = "grey", shape = OneByThree }
 
+        Summoner ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = TwoByTwo }
+
         Troll ->
             Counter { color = "brown", shape = TwoByTwo }
+
+        Vigilant ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = TwoByTwo }
+
+        Void ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = OneByThree }
+
+        Warlock ->
+            -- TODO pick unique color
+            Counter { color = "black", shape = ThreeByTwo }
 
         Warrior ->
             Counter { color = "blue", shape = TwoByThree }
@@ -107,6 +181,21 @@ counter alliance =
 toHtml : Counter -> Html msg
 toHtml (Counter { shape } count) =
     case shape of
+        OneByOne ->
+            div [ class "counter" ]
+                [ div [ class "tier" ]
+                    [ bubble (count >= 1)
+                    ]
+                ]
+
+        OneByTwo ->
+            div [ class "counter" ]
+                [ div [ class "tier" ]
+                    [ bubble (count >= 1)
+                    , bubble (count >= 2)
+                    ]
+                ]
+
         OneByThree ->
             div [ class "counter" ]
                 [ div [ class "tier" ]
