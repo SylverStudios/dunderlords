@@ -283,6 +283,73 @@ allHeroes =
     ]
 
 
+
+-- [ abaddon
+-- , arcWarden
+-- , axe
+-- , batrider
+-- , beastmaster
+-- , bloodseeker
+-- , bristleback
+-- , broodmother
+-- , chaosKnight
+-- , crystalMaiden
+-- , dazzle
+-- , disruptor
+-- , doom
+-- , dragonKnight
+-- , drowRanger
+-- , earthSpirit
+-- , emberSpirit
+-- , enigma
+-- , facelessVoid
+-- , io
+-- , juggernaut
+-- , keeperoftheLight
+-- , legionCommander
+-- , lich
+-- , lifestealer
+-- , loneDruid
+-- , luna
+-- , lycan
+-- , magnus
+-- , medusa
+-- , mirana
+-- , morphling
+-- , naturesProphet
+-- , necrophos
+-- , nyxAssassin
+-- , ogreMagi
+-- , omniknight
+-- , pudge
+-- , queenofPain
+-- , razor
+-- , sandKing
+-- , shadowDemon
+-- , shadowFiend
+-- , shadowShaman
+-- , slardar
+-- , slark
+-- , snapfire
+-- , stormSpirit
+-- , sven
+-- , templarAssassin
+-- , terrorblade
+-- , tidehunter
+-- , tiny
+-- , treantProtector
+-- , trollWarlord
+-- , tusk
+-- , venomancer
+-- , viper
+-- , voidSpirit
+-- , warlock
+-- , weaver
+-- , windranger
+-- , witchDoctor
+-- ]
+
+
 {-| Tusk (A Hero Type, has similar fields to others, type alias?)
 It's nice to have the Hero as an identifier.
 Can I have a Tusk Please - not necesarrily, can I have a Tusk with all info on it, filled out type
