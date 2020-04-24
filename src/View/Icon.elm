@@ -1,4 +1,4 @@
-module View.Icon exposing (icon, toHtml, withMsg)
+module View.Icon exposing (icon, toHtml, withMsg, withName)
 
 import Html exposing (Html, div, img, text)
 import Html.Attributes exposing (alt, class, src)
@@ -11,12 +11,14 @@ type Icon msg
 
 
 type alias Options msg =
-    { onClick : Maybe (Hero -> msg) }
+    { onClick : Maybe (Hero -> msg)
+    , showName : Bool
+    }
 
 
 icon : Hero -> Icon msg
 icon hero =
-    Icon { onClick = Nothing } hero
+    Icon { onClick = Nothing, showName = True } hero
 
 
 toHtml : Icon msg -> Html msg
@@ -32,13 +34,25 @@ toHtml (Icon options hero) =
 
                 Just msg ->
                     [ onClick (msg hero) ]
+
+        textSection =
+            if options.showName then
+                text heroName
+
+            else
+                text ""
     in
     div []
         [ img (attrs ++ [ class "hero", alt (heroName ++ " Mini Badge"), src (Model.Hero.imagePath hero) ]) []
-        , text heroName
+        , textSection
         ]
 
 
 withMsg : (Hero -> msg) -> Icon msg -> Icon msg
-withMsg msg (Icon _ hero) =
-    Icon { onClick = Just msg } hero
+withMsg msg (Icon options hero) =
+    Icon { options | onClick = Just msg } hero
+
+
+withName : Bool -> Icon msg -> Icon msg
+withName show (Icon options hero) =
+    Icon { options | showName = show } hero

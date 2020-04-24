@@ -49,11 +49,18 @@ Display a suggestion h3, with a Mini icon, a name and that hero's alliance Icons
 -}
 suggestion : List Hero -> Html Msg
 suggestion heroes =
+    let
+        heroIcon hero =
+            hero
+                |> View.Icon.icon
+                |> View.Icon.withMsg Add
+                |> View.Icon.toHtml
+    in
     case Model.Crew.suggest heroes of
         Just suggestedHero ->
             div [ class "suggestion" ]
                 [ div [ class "header" ] [ h3 [] [ text "Suggestion" ] ]
-                , heroMini Add suggestedHero.name
+                , heroIcon suggestedHero.name
                 , allianceIcons suggestedHero.alliances
                 ]
 
@@ -63,7 +70,10 @@ suggestion heroes =
 
 heroMini : (Hero -> msg) -> Hero -> Html msg
 heroMini msg hero =
-    hero |> View.Icon.icon |> View.Icon.withMsg msg |> View.Icon.toHtml
+    hero
+        |> View.Icon.icon
+        |> View.Icon.withMsg msg
+        |> View.Icon.toHtml
 
 
 teamSection : Model -> Html Msg
@@ -90,10 +100,17 @@ crew firstHero remaining =
         refreshButton =
             button [ class "rounded", onClick Refresh ]
                 [ img [ src "/images/refresh-24px.svg" ] [] ]
+
+        heroMiniNoName hero =
+            hero
+                |> View.Icon.icon
+                |> View.Icon.withMsg Remove
+                |> View.Icon.withName False
+                |> View.Icon.toHtml
     in
     div [ class "crew" ]
         [ div [ class "header" ] [ h3 [] [ text "Crew" ], refreshButton ]
-        , div [ class "crew-icons" ] <| List.map (heroMini Remove) (firstHero :: remaining)
+        , div [ class "crew-icons" ] <| List.map heroMiniNoName (firstHero :: remaining)
         ]
 
 
