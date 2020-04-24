@@ -42,12 +42,12 @@ allianceCount heroes =
 List all heroes, sort by alliance matches
 no secondary sort for now, take the top 3
 -}
-suggest : List Hero -> Maybe Hero
+suggest : List Hero -> Maybe HeroData
 suggest heroes =
     heroes
         |> rankMatches
         |> List.head
-        |> Maybe.map (Tuple.first >> .name)
+        |> Maybe.map Tuple.first
 
 
 rankMatches : List Hero -> List ( HeroData, Int )

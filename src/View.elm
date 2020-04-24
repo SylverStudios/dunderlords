@@ -44,14 +44,17 @@ heroPool heroes =
         ]
 
 
+{-| Generate a suggestion based on your current team
+Display a suggestion h3, with a Mini icon, a name and that hero's alliance Icons.
+-}
 suggestion : List Hero -> Html Msg
 suggestion heroes =
     case Model.Crew.suggest heroes of
         Just suggestedHero ->
             div [ class "suggestion" ]
                 [ div [ class "header" ] [ h3 [] [ text "Suggestion" ] ]
-                , heroMini Add suggestedHero
-                , alliances (suggestedHero :: heroes)
+                , heroMini Add suggestedHero.name
+                , allianceIcons suggestedHero.alliances
                 ]
 
         Nothing ->
@@ -122,3 +125,11 @@ alliances heroes =
         |> List.reverse
         |> List.map (\( alliance, count ) -> allianceCounter alliance count)
         |> div [ class "alliance-icons" ]
+
+
+allianceIcons : List Alliance -> Html Msg
+allianceIcons all =
+    all
+        |> List.map Model.Alliance.imagePath
+        |> List.map (\path -> img [ class "alliance-img", src path ] [])
+        |> div []
