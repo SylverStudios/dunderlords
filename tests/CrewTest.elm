@@ -24,11 +24,13 @@ crewTest =
             \() ->
                 [ Slardar ]
                     |> Model.Crew.suggest
+                    |> Maybe.map .name
                     |> Expect.equal (Just Tidehunter)
         , test "does not suggest a repeat of what we already have" <|
             \() ->
                 [ Slardar, Tidehunter ]
                     |> Model.Crew.suggest
+                    |> Maybe.map .name
                     |> Expect.all
                         [ Expect.notEqual (Just Slardar)
                         , Expect.notEqual (Just Tidehunter)
