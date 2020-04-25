@@ -84,7 +84,8 @@ teamSection { team } =
 
         atLeastOne :: remaining ->
             div [ class "crew-summary" ]
-                [ crew atLeastOne remaining
+                [ level (List.length team)
+                , crew atLeastOne remaining
                 , allianceSection (atLeastOne :: remaining)
                 ]
 
@@ -119,6 +120,14 @@ allianceSection heroes =
     div [ class "alliances" ]
         [ div [ class "header" ] [ h3 [] [ text "Alliances" ] ]
         , alliances heroes
+        ]
+
+
+level : Int -> Html msg
+level heroCount =
+    div [ class "crew-level" ]
+        [ div [ class "header" ] [ h3 [] [ text "Level" ] ]
+        , div [ class "crew-level__number" ] [ text (heroCount |> clamp 3 10 |> String.fromInt) ]
         ]
 
 
