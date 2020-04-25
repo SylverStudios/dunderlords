@@ -28,7 +28,15 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update message model =
     case message of
         Add hero ->
-            ( { model | team = hero :: model.team }, Cmd.none )
+            let
+                newCrew =
+                    if List.length model.team >= 10 then
+                        model.team
+
+                    else
+                        hero :: model.team
+            in
+            ( { model | team = newCrew }, Cmd.none )
 
         Remove hero ->
             ( { model | team = List.Extra.remove hero model.team }, Cmd.none )
