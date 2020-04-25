@@ -50,11 +50,12 @@ button {
 
 // Alliance Summary
 .alliances {
-    flex-basis: 40%;
+    flex-basis: 50%;
 }
 
 .alliance-icons {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .alliance {
@@ -103,7 +104,7 @@ button {
 }
 
 .crew {
-    flex-basis: 60%;
+    flex-basis: 40%;
 }
 
 .crew-empty {
@@ -113,6 +114,16 @@ button {
 
 .crew-icons {
     display: flex
+}
+
+.crew-level {
+    flex-basis: 10%;
+}
+
+.crew-level__number {
+    text-align: center;
+    // line-height: 2rem;
+    font-size: 2rem;
 }
 
 // Hero mini
