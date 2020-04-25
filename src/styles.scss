@@ -69,8 +69,7 @@ button {
 .counter {
     display: flex;
     flex-grow: 1;
-    width: 2rem;
-    height: 2rem;
+    margin-right: 2px
 }
 
 .tier {
@@ -114,4 +113,25 @@ button {
 
 .crew-icons {
     display: flex
+}
+
+// Hero mini
+.hero {
+    cursor:pointer;
+    -webkit-transition: box-shadow 0.2s;
+    -moz-transition: box-shadow 0.2s;
+    transition: box-shadow 0.2s;
+    border-radius: 50%;
+}
+
+.hero:hover:after {
+	-webkit-transform: scale(0.85);
+	-moz-transform: scale(0.85);
+	-ms-transform: scale(0.85);
+	transform: scale(0.85);
+}
+
+.hero:hover {
+    // x y blur size
+	box-shadow: 0 0 2px 5px rgba(120, 120, 120, 0.564);
 }
