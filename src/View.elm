@@ -1,14 +1,16 @@
 module View exposing (view)
 
 import Dict.Any
-import Html exposing (Html, button, div, h1, h2, h3, header, img, section, text)
+import Html exposing (Html, button, div, h1, h2, h3, header, img, section, span, text)
 import Html.Attributes exposing (class, src)
 import Html.Events exposing (onClick)
 import Model exposing (Model, Msg(..))
 import Model.Alliance exposing (Alliance(..))
 import Model.Crew
 import Model.Hero exposing (Hero(..))
+import View.Alliance
 import View.Counter
+import View.HeroCard
 import View.Icon
 
 
@@ -22,25 +24,126 @@ view model =
             ]
         , section []
             [ header [] [ h2 [] [ text "Hero Pool" ] ]
-            , heroPool model.team
+            , lowerSection model
             ]
         ]
 
 
-heroPool : List Hero -> Html Msg
-heroPool heroes =
+lowerSection : Model -> Html Msg
+lowerSection { team, poolAlliance } =
     div [ class "pool" ]
-        [ div []
-            [ heroMini Add EarthSpirit
-            , heroMini Add Juggernaut
-            , heroMini Add Pudge
-            , heroMini Add Slardar
-            , heroMini Add Tidehunter
-            , heroMini Add Tiny
-            , heroMini Add TrollWarlord
-            , heroMini Add Tusk
-            ]
-        , suggestion heroes
+        [ heroPool poolAlliance
+        , suggestion team
+        ]
+
+
+{-| Show previous and next alliance to choose from
+-}
+allianceSelection : Alliance -> ( Alliance, Alliance )
+allianceSelection current =
+    case current of
+        Assassin ->
+            ( Warrior, Bloodbound )
+
+        Bloodbound ->
+            ( Assassin, Brawny )
+
+        Brawny ->
+            ( Bloodbound, Brute )
+
+        Brute ->
+            ( Brawny, Champion )
+
+        Champion ->
+            ( Brute, Deadeye )
+
+        Deadeye ->
+            ( Champion, Demon )
+
+        Demon ->
+            ( Deadeye, Dragon )
+
+        Dragon ->
+            ( Demon, Druid )
+
+        Druid ->
+            ( Dragon, Healer )
+
+        Healer ->
+            ( Druid, Heartless )
+
+        Heartless ->
+            ( Healer, Human )
+
+        Human ->
+            ( Heartless, Hunter )
+
+        Hunter ->
+            ( Human, Insect )
+
+        Insect ->
+            ( Hunter, Knight )
+
+        Knight ->
+            ( Insect, Mage )
+
+        Mage ->
+            ( Knight, Primordial )
+
+        Primordial ->
+            ( Mage, Savage )
+
+        Savage ->
+            ( Primordial, Scaled )
+
+        Scaled ->
+            ( Savage, Spirit )
+
+        Spirit ->
+            ( Scaled, Summoner )
+
+        Summoner ->
+            ( Spirit, Troll )
+
+        Troll ->
+            ( Summoner, Vigilant )
+
+        Vigilant ->
+            ( Troll, Void )
+
+        Void ->
+            ( Vigilant, Warlock )
+
+        Warlock ->
+            ( Void, Warrior )
+
+        Warrior ->
+            ( Warlock, Assassin )
+
+
+heroPool : Alliance -> Html Msg
+heroPool selectedAlliance =
+    let
+        ( previousAlliance, nextAlliance ) =
+            allianceSelection selectedAlliance
+
+        selector =
+            div [ class "pool-filter__toggles" ]
+                [ span [ class "pool-filter__toggle", onClick (PoolAllianceSelected previousAlliance) ] [ text "⬅️", View.Alliance.toImage previousAlliance ]
+                , View.Alliance.toImage selectedAlliance
+                , span [ class "pool-filter__toggle", onClick (PoolAllianceSelected nextAlliance) ] [ View.Alliance.toImage nextAlliance, text "➡️" ]
+                ]
+
+        heroes =
+            div [ class "pool-filter__list" ]
+                (Model.Hero.allHeroes
+                    |> List.filter (\hero -> List.member selectedAlliance hero.alliances)
+                    |> List.map (\hero -> View.HeroCard.view hero Add)
+                )
+    in
+    div [ class "pool-filter__container" ]
+        [ selector
+        , heroes
         ]
 
 
@@ -49,31 +152,15 @@ Display a suggestion h3, with a Mini icon, a name and that hero's alliance Icons
 -}
 suggestion : List Hero -> Html Msg
 suggestion heroes =
-    let
-        heroIcon hero =
-            hero
-                |> View.Icon.icon
-                |> View.Icon.withMsg Add
-                |> View.Icon.toHtml
-    in
     case Model.Crew.suggest heroes of
         Just suggestedHero ->
             div [ class "suggestion" ]
                 [ div [ class "header" ] [ h3 [] [ text "Suggestion" ] ]
-                , heroIcon suggestedHero.name
-                , allianceIcons suggestedHero.alliances
+                , View.HeroCard.view suggestedHero Add
                 ]
 
         Nothing ->
             text ""
-
-
-heroMini : (Hero -> msg) -> Hero -> Html msg
-heroMini msg hero =
-    hero
-        |> View.Icon.icon
-        |> View.Icon.withMsg msg
-        |> View.Icon.toHtml
 
 
 teamSection : Model -> Html Msg
@@ -151,11 +238,3 @@ alliances heroes =
         |> List.reverse
         |> List.map (\( alliance, count ) -> allianceCounter alliance count)
         |> div [ class "alliance-icons" ]
-
-
-allianceIcons : List Alliance -> Html Msg
-allianceIcons all =
-    all
-        |> List.map Model.Alliance.imagePath
-        |> List.map (\path -> img [ class "alliance-img", src path ] [])
-        |> div []

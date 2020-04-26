@@ -2,6 +2,7 @@ module CounterTest exposing (counterTest)
 
 import Expect
 import Model exposing (Model, Msg(..))
+import Model.Alliance exposing (Alliance(..))
 import Model.Hero exposing (Hero(..))
 import Test exposing (..)
 import Test.Html.Query as Query
@@ -16,7 +17,7 @@ counterTest =
     describe "Testing counter function"
         [ test "expects 2 warrior and 2 scaled = 4 filled" <|
             \() ->
-                Model [ Slardar, Tidehunter ]
+                Model [ Slardar, Tidehunter ] Warrior
                     |> View.view
                     |> Query.fromHtml
                     |> Query.findAll [ class "filled" ]

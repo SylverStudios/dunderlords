@@ -127,6 +127,27 @@ button {
 }
 
 // Hero mini
+.hero-card {
+    display: flex;
+}
+.pool-filter__container {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+}
+
+.pool-filter__toggles {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem
+}
+
+.pool-filter__toggle {
+    cursor:pointer;
+    display: flex;
+    justify-content: space-around;
+}
+
 .hero {
     cursor:pointer;
     -webkit-transition: box-shadow 0.2s;
