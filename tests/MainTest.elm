@@ -3,10 +3,11 @@ module MainTest exposing (unitTest, viewTest)
 import Expect
 import Main
 import Model exposing (Model, Msg(..))
+import Model.Alliance exposing (Alliance(..))
 import Model.Hero exposing (Hero(..))
 import Test exposing (..)
 import Test.Html.Query as Query
-import Test.Html.Selector exposing (tag, text)
+import Test.Html.Selector exposing (class, text)
 import View
 
 
@@ -17,13 +18,13 @@ unitTest =
     describe "simple unit test"
         [ test "Add adds a tusk" <|
             \() ->
-                Main.update (Add Tusk) (Model [])
+                Main.update (Add Tusk) (Model [] Warrior)
                     |> Tuple.first
                     |> .team
                     |> Expect.equal [ Tusk ]
         , test "Add 2 tusks" <|
             \() ->
-                Main.update (Add Tusk) (Model [])
+                Main.update (Add Tusk) (Model [] Warrior)
                     |> Tuple.first
                     |> Main.update (Add Tusk)
                     |> Tuple.first
@@ -31,7 +32,7 @@ unitTest =
                     |> Expect.equal [ Tusk, Tusk ]
         , test "Remove a tusks" <|
             \() ->
-                Model [ Tusk ]
+                Model [ Tusk ] Warrior
                     |> Main.update (Remove Tusk)
                     |> Tuple.first
                     |> .team
@@ -59,10 +60,9 @@ viewTest =
     describe "Testing view function"
         [ test "Button has the expected text" <|
             \() ->
-                Model []
+                Model [] Warrior
                     |> View.view
                     |> Query.fromHtml
-                    |> Query.findAll [ tag "h2" ]
-                    |> Query.first
-                    |> Query.has [ text "Team" ]
+                    |> Query.find [ text "Tusk" ]
+                    |> Query.has [ text "Tusk" ]
         ]

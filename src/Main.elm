@@ -3,6 +3,7 @@ module Main exposing (init, main, update)
 import Browser
 import List.Extra
 import Model exposing (Model, Msg(..))
+import Model.Alliance exposing (Alliance(..))
 import Model.Hero exposing (Hero(..))
 import View
 
@@ -15,7 +16,7 @@ import View
 
 init : Int -> ( Model, Cmd Msg )
 init _ =
-    ( { team = [ Tusk, Pudge, Tidehunter, Slardar ] }, Cmd.none )
+    ( { team = [ Tusk, Pudge, Tidehunter, Slardar ], poolAlliance = Warrior }, Cmd.none )
 
 
 
@@ -43,6 +44,9 @@ update message model =
 
         Refresh ->
             ( { model | team = [] }, Cmd.none )
+
+        PoolAllianceSelected alliance ->
+            ( { model | poolAlliance = alliance }, Cmd.none )
 
 
 

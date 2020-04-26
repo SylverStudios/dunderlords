@@ -1,8 +1,9 @@
 # Dunderlords Alliance Builder
 
-Mix and match builds, see suggestions for alterations, more?
+Mix and match builds, see suggestions for alterations.
 
-<img alt="Current release v0.1.1" src="./layoutUpdates.png" height="250">
+## 🎉 Now with More Heroes! 🔥
+<img alt="Current release v0.1.1" src="./allianceBuilderV1.png" height="250">
 
 ## Developing
 
